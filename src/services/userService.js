@@ -6,8 +6,6 @@ const verfiyToken = require("../middlewares/verfiyToken");
 
 
 
-
-
 //로그인
 const login = async(email, password) => {
     try{
@@ -53,5 +51,5 @@ const login = async(email, password) => {
 
 
 module.exports = {
-     login
+    login
 }

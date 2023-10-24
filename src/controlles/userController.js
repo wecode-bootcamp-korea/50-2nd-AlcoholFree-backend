@@ -1,6 +1,7 @@
 const userService = require("../services/userService");
 
 
+
 //로그인
 const login = async(req, res) => {
 
@@ -23,5 +24,5 @@ const login = async(req, res) => {
 }
 
 module.exports = {
-    login
+     login
 }
