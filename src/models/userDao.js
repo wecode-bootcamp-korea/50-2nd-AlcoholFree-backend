@@ -24,30 +24,8 @@ myDataSource.initialize()
   });
 
 
-// 회원가입
-const signup = async (email, password, name, phoneNumber, birthDay, address) => {
-	try {
-		const result = myDataSource.query(
-            `
-            insert into users(
-              email,
-              password,
-              name,
-              phoneNumber,
-              birthDay,
-              address
-            ) values (?, ?, ?, ?, ?, ?)
-            `,[email, password, name, phoneNumber, birthDay, address]
-        )
-        return result;
 
-	} catch (err) {
-		const error = new Error('INVALID_DATA_INPUT');
-		error.statusCode = 500;
-		throw error;
-	}
-};
-
+// 요청 이메일 존재 여부 확인
 const select = async(email) => {
   try{
     const result = await myDataSource.query(
@@ -65,11 +43,29 @@ const select = async(email) => {
   }
 }
 
-const login = async(email, password) => {
+// 로그인
+const login = async(email) => {
+  try{
+    const result = await myDataSource.query(
+      `
+        select * from users
+        where email = ?
+      
+      `, [email]
+    );
+    
+    return result
+  }catch(err){
+    console.log(err);
+    const error = new Error();
+    error.message = "로그인 도중 에러가 발생하였습니다"
+    error.statusCode = 500;
+    throw error;
+  }
 
 }
 
 
 module.exports = {
-    signup, select
+    select, login
 }
