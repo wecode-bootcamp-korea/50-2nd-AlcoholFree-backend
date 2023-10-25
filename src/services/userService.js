@@ -65,8 +65,8 @@ const signup = async(email, password, name, phoneNumber, birthDay, address) => {
         error.message = "회원 가입 도중 오류가 발생 하였습니다."
         error.statusCode = 409;
         throw error;
-    }
-}
+    };
+};
 
 
 
