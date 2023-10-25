@@ -21,7 +21,6 @@ const signup = async(req, res) => {
     }catch(err){
         return res.json({massage : err})
     }
->>>>>>> users/signup
 }
 
 
