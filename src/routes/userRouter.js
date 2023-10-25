@@ -7,6 +7,9 @@ const verfiyToken = require("../middlewares/verfiyToken")
 router.post("/login", userController.login);
 
 
+//회원가입
+router.post("/signup", userController.signup);
+
 
 module.exports = {
     router
