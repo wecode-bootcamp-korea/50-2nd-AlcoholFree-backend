@@ -1,14 +1,4 @@
-<<<<<<< HEAD
 const userDao = require("../models/userDao");
-
-
-
-const signup = async() => {
-
-}
-
-
-=======
 const { SimpleConsoleLogger } = require("typeorm");
 const userDao = require("../models/userDao");
 const { json } = require("body-parser");
@@ -79,9 +69,6 @@ const signup = async(email, password, name, phoneNumber, birthDay, address) => {
     }
 }
 
-
-
->>>>>>> users/signup
 module.exports = {
     signup
 }
