@@ -4,7 +4,7 @@ const userController = require("../controlles/userController");
 
 
 //회원가입
-router.post("/signup", userController.signup)
+router.post("/signup", userController.signup);
 
 
 module.exports = {
