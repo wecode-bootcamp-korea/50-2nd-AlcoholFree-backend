@@ -67,7 +67,7 @@ const select = async(email) => {
     error.statusCode = 500;
     throw error;
   }
-}
+};
 
 // 로그인
 const login = async(email) => {
@@ -89,7 +89,7 @@ const login = async(email) => {
     throw error;
   }
 
-}
+};
 
 
 module.exports = {

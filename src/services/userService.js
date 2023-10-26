@@ -5,9 +5,9 @@ const bcrypt = require("../middlewares/bcrypt");
 const verfiyToken = require("../middlewares/verfiyToken");
 
 
+// 회원가입
+const signup = async(email, password, name, phoneNumber, birthDay, address) => {
 
-//로그인
-const login = async(email, password) => {
     try{
     // 유저 가입정보 불러오기
     const dbUserData = await userDao.select(email);
@@ -16,7 +16,6 @@ const login = async(email, password) => {
     if(dbUserData.length !== 0){
         return false;
     }
-  
     //email 정규식
     const emailValidation = new RegExp("^^[a-zA-Z0-9+-_.]+@{1}[a-zA-Z0-9-]+\.{1}[a-zA-Z0-9-.]+$");
     
@@ -34,34 +33,43 @@ const login = async(email, password) => {
         "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{10,20})"
     );
 
+    console.log(password);
+
     if(!pwValidation.test(password)){
         const err = new Error();
         err.message = "패스워드는 대,소문자 및 숫자,특수문자 1자 이상을 이용하여 10~20자리를 만들어 주세요."
         err.statusCode = 409;
         throw err;
+    }else{
+        console.log("패스워드 형식이 올바릅니다.")
     }
+
+    // password 암호화
+     const saltRound = 10;
+     const hashedPassword = await bcrypt.makehash(password, saltRound);
+     password = hashedPassword; // 암호화된 데이터를 password에 넣기
 
     }catch(err){
         const error = new Error();
-        error.message = "패스워드는 대,소문자 및 숫자,특수문자 1자 이상을 이용하여 10~20자리를 만들어 주세요."
+        error.message = "입력 데이터를 확인해 주세요."
         error.statusCode = 409;
         throw error;
     }
-
     //데이터 저장
     try{
-        
         const result = await userDao.signup(email, password, name, phoneNumber, birthDay, address);
         return result
 
     }catch(err){
-        console.log(err);
         const error = new Error();
-        error.message = "로그인중 에러가 발생 하였습니다."
-        throw error
-    }
-}
+        error.message = "회원 가입 도중 오류가 발생 하였습니다."
+        error.statusCode = 409;
+        throw error;
+    };
+};
+
+
 
 module.exports = {
-    login
+    signup, login
 }
