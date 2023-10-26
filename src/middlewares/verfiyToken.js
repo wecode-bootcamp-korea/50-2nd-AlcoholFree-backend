@@ -34,4 +34,4 @@ const createToken = async(id, email) => {
 module.exports = {
     verfiyToken, tokenDecode, createToken
 };
->>>>>>> users/signup
+
