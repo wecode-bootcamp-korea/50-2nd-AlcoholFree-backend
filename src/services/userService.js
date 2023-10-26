@@ -33,7 +33,6 @@ const signup = async(email, password, name, phoneNumber, birthDay, address) => {
         "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{10,20})"
     );
 
-    console.log(password);
 
     if(!pwValidation.test(password)){
         const err = new Error();

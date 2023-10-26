@@ -24,7 +24,6 @@ app.use(routes);
 
 const server = http.createServer(app);
 const port = process.env.PORT
-console.log(port);
 
 
 const start = async() => {

@@ -4,14 +4,16 @@ const envFilePaht = path.resolve(__dirname, "../utils", ".env");
 const dotenv = require("dotenv")
 dotenv.config({path :envFilePaht });
 
+
 const myDataSource = new DataSource({
-	type: process.env.TYPEORM_CONNECTION,
+	  type: process.env.TYPEORM_CONNECTION,
     host: process.env.TYPEORM_HOST,
     port: process.env.TYPEORM_PORT,
     username: process.env.TYPEORM_USERNAME,
     password: process.env.TYPEORM_PASSWORD,
     database: process.env.TYPEORM_DATABASE
 })
+
 
 myDataSource.initialize()
   .then(() => {
