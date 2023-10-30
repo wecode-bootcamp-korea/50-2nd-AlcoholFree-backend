@@ -22,8 +22,12 @@ appDataSoure.initialize()
 })
 
 
-const cost = async() => {
-
+const cost = async(id) => {
+    const result = await appDataSoure.query(
+        `
+        
+        `,[]
+    )
 }
 
 
