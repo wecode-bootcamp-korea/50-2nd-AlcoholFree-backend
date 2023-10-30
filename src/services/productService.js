@@ -18,7 +18,10 @@ const selectUserInfo = async(userInfo) =>{
             return false;
         }
 
+
         console.log(selectUserInfo);
+
+        return selectUserInfo;
         
        
 

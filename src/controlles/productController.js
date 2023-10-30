@@ -7,6 +7,7 @@ const selectUserInfo = async (req, res) => {
     try{
         const userInfo = req.user;
         const result = await productService.selectUserInfo(userInfo);
+        return res.json({message : result});
 
     }catch(err){
         console.log(err);
