@@ -32,16 +32,12 @@ const selectUserInfo = async(userInfo) =>{
 
 
 
-
-
 // 장바구니에 담긴 상품을 정하고 결제 버튼을 눌렀을때
-const cost = async(cartId) => {
+const cost = async(totalprice) => {
+
     try{
-
-        // // 장바구니 조회
-        // const selectCart = await productDao.cost(cartId);
-
-
+        const result = await productDao.cost(totalprice);
+        return result;
     }catch(err){
         console.log(err);s
         const error = new Error();
