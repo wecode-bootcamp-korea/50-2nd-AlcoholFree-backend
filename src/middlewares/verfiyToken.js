@@ -23,7 +23,7 @@ const verfiyToken  = async(req, res, next) => {
 
 // 토큰 검증
 const tokenDecode = async(jwtToken, secetKey) => {
-    return jwt.verify(jwtToken, secetKey);
+    return token.verify(jwtToken, secetKey);
 }
 
 const createToken = async(id, email) => {
