@@ -2,11 +2,14 @@ const productDao = require("../models/productDao")
 
 
 // 장바구니에 담긴 상품을 정하고 결제 버튼을 눌렀을때
-const cost = async(cartId, name, avm, orgin, price, count, totalPrice) => {
-
+const cost = async(cartId) => {
     try{
-        const result = await productDao.cost(cartId, name, avm, orgin, price, count, totalPrice);
-        return result;
+
+        console.log(cartId);
+        
+        // const result = await productDao.cost(cartIds);
+        // console.log(result);
+        // return result;
     }catch(err){
         console.log(err);
         const error = new Error();
