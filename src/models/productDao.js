@@ -22,9 +22,36 @@ appDataSoure.initialize()
 })
 
 
-const cost = async(id) => {
+// 유저 정보 조회
+const selectUserInfo = async() => {
+    try{
+        const result = await appDataSoure.query(
+            `
+            `,[]
+        )
+    }catch(err){
+
+    }
+
+}
+
+// 장바구니에 담긴 데이터 확인
+const selectCart = async(cartId) => {
     const result = await appDataSoure.query(
         `
+        select * from ShoppingItems
+        where = ?
+        `,[cartId]
+    )
+    console.log(result);
+    return result;
+}
+
+// 결제
+const cost = async(cartId) => {
+    const result = await appDataSoure.query(
+        `
+        
         
         `,[]
     )
@@ -32,5 +59,5 @@ const cost = async(id) => {
 
 
 module.exports = {
-    cost
+    cost, selectCart, selectUserInfo
 }
