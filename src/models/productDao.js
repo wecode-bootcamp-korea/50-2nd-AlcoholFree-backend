@@ -23,14 +23,20 @@ appDataSoure.initialize()
 
 
 // 유저 정보 조회
-const selectUserInfo = async() => {
+const selectUserInfo = async(userId, email) => {
     try{
         const result = await appDataSoure.query(
             `
-            `,[]
+            select * from users
+            where id =? and email =?
+            `,[userId, email]
         )
+        return result;
     }catch(err){
-
+        console.log(err)
+        const error = new Error();
+        error.message = "유저 정보 조회 에러";
+        throw error;
     }
 
 }
