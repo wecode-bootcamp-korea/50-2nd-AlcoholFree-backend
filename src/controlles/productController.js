@@ -17,18 +17,14 @@ const selectUserInfo = async (req, res) => {
     }
 }
 
-
-
 // 장바구니에 담긴 상품을 정하고 결제 버튼을 눌렀을때 
 const cost = async(req, res) => {
-    const shoppingCart = req.body;
+
+    const {totalprice} = req.body;
+
     try{
-
-        // const cartIds = Promise.all(shoppingCart.map(async shoppingCart => {
-        //     const cartId = shoppingCart;
-        //     const result = await productService.cost(cartId);
-        // }));
-
+         const result = await productService.cost(totalprice);
+         return result;
     }catch(err){
         console.log(err);
         const error = new Error();
