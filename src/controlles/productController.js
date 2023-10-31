@@ -20,13 +20,21 @@ const selectUserInfo = async (req, res) => {
 
 // 장바구니에 담긴 상품을 정하고 결제 버튼을 눌렀을때 
 const cost = async(req, res) => {
-
-    const totalprice = req.body;
+    const totalPrice = req.body;
     const userInfo = req.user;
 
     try{
-         const result = await productService.cost(totalprice, userInfo);
-         return result;
+        // key 검증
+        if(!totalPrice){
+            return res.json({message : "key_error"})
+        }
+         const result = await productService.cost(totalPrice, userInfo);
+        
+         //result의 return 값이 true, false 경우
+         if(result === true){
+            return res.json({message : "order_success"});
+         }
+            return res.json({message : "order_fail"});
     }catch(err){
         console.log(err);
         const error = new Error();

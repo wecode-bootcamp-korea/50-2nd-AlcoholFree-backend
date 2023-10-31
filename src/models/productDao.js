@@ -80,7 +80,9 @@ const cartList = async(userId) => {
             `
             select * from ShoppingItems
             where userId = ?
-            `,[]
+            order by id desc
+
+            `,[userId]
         );
         return result;
 
@@ -92,15 +94,19 @@ const cartList = async(userId) => {
     }
 }
 
+
 // 결제 정보 담기
-
-const payment = async() => {
+const payment = async(cartId, totalPrice) => {
     try{
-        const result = appDataSoure.query(
+        const result = await appDataSoure.query(
             `
-
-            `,[]
+            insert into Payments (shoppingItemsId, totalPrice)
+            values (?, ?)
+            
+            `,[cartId, totalPrice] 
         );
+
+       return result;
 
     }catch(err){
         console.log(err);
@@ -110,7 +116,28 @@ const payment = async() => {
     }
 }
 
+// 결제 상태 업데이트
+const updateStatus = async(payStatus, userId) => {
+    try{
+        const result = await appDataSoure.query(
+            `
+            update ShoppingItems
+            set status = ?
+            where userId = ?
+            
+            `,[payStatus, userId] 
+        );
+
+       return result;
+
+    }catch(err){
+        console.log(err);
+        const error = new Error();
+        error.message = "DB 에러"
+        throw error;
+    }
+}
 
 module.exports = {
-    cost, selectCart, selectUserInfo, payment, cartList
+    cost, selectCart, selectUserInfo, payment, cartList, updateStatus
 }
