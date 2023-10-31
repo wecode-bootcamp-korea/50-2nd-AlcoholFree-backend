@@ -4,7 +4,7 @@ const { decode } = require("punycode");
 
 // 토큰 검증
 const verfiyToken  = async(req, res, next) => {
-    const jwtToken = req.headers.authorization
+    const jwtToken = req.headers.token
     console.log(jwtToken);
 
     if(!jwtToken){

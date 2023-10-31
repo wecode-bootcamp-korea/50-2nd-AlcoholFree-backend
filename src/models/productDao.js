@@ -54,13 +54,24 @@ const selectCart = async(cartId) => {
 }
 
 // 결제
-const cost = async(cartId) => {
-    const result = await appDataSoure.query(
-        `
-        
-        
-        `,[]
-    )
+const cost = async(userPoint, userId) => {
+    try{
+        const result = await appDataSoure.query(
+            `
+            update users set point = ?
+            where id = ?;
+            
+            `,[userPoint, userId]
+        )
+        console.log(result);
+        return result;
+    }catch(err){
+        console.log(err);
+        const error = new Error();
+        error.message = "DB 에러"
+        throw error;
+    }
+
 }
 
 

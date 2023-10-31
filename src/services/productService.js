@@ -35,12 +35,18 @@ const selectUserInfo = async(userInfo) =>{
 const cost = async(totalprice, userInfo) => {
 
     try{
+
+        //유저 검증 및 정보 조회
         const userId = userInfo.id;
         const userEmail = userInfo.email
-        console.log(userId, userEmail);
+        const selectUserInfo = await productDao.selectUserInfo(userId, userEmail);
 
-        // const result = await productDao.cost(totalprice);
-        // return result;
+        const userPoint = selectUserInfo[0].point - totalprice.totalprice // 유저의 기존 포인트와 유저의 사용 포인트를 차감
+        const result = await productDao.cost(userPoint, userId);
+       
+        console.log(result);
+
+        return result;
     }catch(err){
         console.log(err);s
         const error = new Error();
