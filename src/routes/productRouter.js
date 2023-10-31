@@ -13,6 +13,8 @@ router.delete("/cart/:id",token.verfiyToken, productController.deleteItems);
 // router.get("/detail/payment", productController.payments);
 // router.post("/detail/payment", productController.payments);
 
+router.post("/costUser", verfiyToken.verfiyToken, productController.selectUserInfo);
+router.post("/costPay", verfiyToken.verfiyToken, productController.cost);
 
 module.exports ={
     router
