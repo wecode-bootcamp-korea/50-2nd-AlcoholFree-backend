@@ -46,6 +46,7 @@ const signup = async(email, password, name, phoneNumber, birthDay, address) => {
     // password 암호화
      const saltRound = 10;
      const hashedPassword = await bcrypt.makehash(password, saltRound);
+
      password = hashedPassword; // 암호화된 데이터를 password에 넣기
 
     }catch(err){
