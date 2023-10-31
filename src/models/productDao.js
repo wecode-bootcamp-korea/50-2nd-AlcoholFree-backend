@@ -1,5 +1,6 @@
 const { DataSource } = require('typeorm');
 
+
 const myDataSource = new DataSource({
     type: process.env.TYPEORM_CONNECTION,
     host: process.env.TYPEORM_HOST,
@@ -17,18 +18,36 @@ myDataSource.initialize()//데이터베이스 연결 초기화 시도
         console.error("Data Source initialization error:", error)
     })
 
+    //유저검증
+    const realUser = async (id, email) => {
+        try {
+            const userCheck = await myDataSource.query(
+                "SELECT id, email FROM users WHERE id = ? AND email = ?",
+                [id, email]
+            );
+            return userCheck;
+        } catch (err) {
+            throw err;
+        }
+    };
+    
+
+
+
 //메인
 const selectProduct = async () => {
     try {//db에서 제품 정보 조회하는 쿼리 실행
         const productMain = await myDataSource.query(`
             SELECT 
-            id,
-            price,
-            name,
-            content,
-            origin,
-            productImg
+            id, 
+            price, 
+            name, 
+            content, 
+            origin, 
+            productImg,
+            categoryId
             FROM Products
+            ORDER BY id
         `);
 
         //console.log("typeorm return data: ", productMain)
@@ -39,4 +58,4 @@ const selectProduct = async () => {
     }
 }
 
-module.exports = { selectProduct }
+module.exports = { selectProduct, realUser }

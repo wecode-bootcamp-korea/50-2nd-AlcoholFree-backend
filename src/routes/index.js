@@ -6,6 +6,6 @@ const userRouter = require("./userRouter");
 router.use("/users", userRouter.router);
 
 const productRouter = require("./productRouter");
-router.use("/product", productRouter.router)
+router.use("/products", productRouter.router)
 
 module.exports = router;
