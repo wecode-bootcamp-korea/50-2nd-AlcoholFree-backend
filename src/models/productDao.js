@@ -53,7 +53,7 @@ const selectCart = async(cartId) => {
     return result;
 }
 
-// 결제
+// 유저의 point 변경
 const cost = async(userPoint, userId) => {
     try{
         const result = await appDataSoure.query(
@@ -71,10 +71,46 @@ const cost = async(userPoint, userId) => {
         error.message = "DB 에러"
         throw error;
     }
+}
 
+// 결제 정보를 담기 위한 cart 정보 불러오기
+const cartList = async(userId) => {
+    try{
+        const result = appDataSoure.query(
+            `
+            select * from ShoppingItems
+            where userId = ?
+            `,[]
+        );
+        return result;
+
+    }catch(err){
+        console.log(err);
+        const error = new Error();
+        error.message = "DB 에러"
+        throw error;
+    }
+}
+
+// 결제 정보 담기
+
+const payment = async() => {
+    try{
+        const result = appDataSoure.query(
+            `
+
+            `,[]
+        );
+
+    }catch(err){
+        console.log(err);
+        const error = new Error();
+        error.message = "DB 에러"
+        throw error;
+    }
 }
 
 
 module.exports = {
-    cost, selectCart, selectUserInfo
+    cost, selectCart, selectUserInfo, payment, cartList
 }

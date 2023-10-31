@@ -7,6 +7,7 @@ const selectUserInfo = async (req, res) => {
     try{
         const userInfo = req.user;
         const result = await productService.selectUserInfo(userInfo);
+        console.log(result)
         return res.json({message : result});
 
     }catch(err){
@@ -32,8 +33,8 @@ const cost = async(req, res) => {
         error.message = "컨트롤러 에러";
         throw error;
     }
-
 }
+
 
 
 
