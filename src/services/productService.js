@@ -19,7 +19,7 @@ const selectUserInfo = async(userInfo) =>{
         }
 
 
-        console.log(selectUserInfo);
+        // console.log(selectUserInfo);
 
         return selectUserInfo;
         
@@ -33,7 +33,6 @@ const selectUserInfo = async(userInfo) =>{
 
 // 장바구니에 담긴 상품을 정하고 결제 버튼을 눌렀을때
 const cost = async(totalprice, userInfo) => {
-
     try{
 
         //유저 검증 및 정보 조회
@@ -41,10 +40,17 @@ const cost = async(totalprice, userInfo) => {
         const userEmail = userInfo.email
         const selectUserInfo = await productDao.selectUserInfo(userId, userEmail);
 
+        // 포인트 사용 및 차감 후 남은 포인트 저장
         const userPoint = selectUserInfo[0].point - totalprice.totalprice // 유저의 기존 포인트와 유저의 사용 포인트를 차감
-        const result = await productDao.cost(userPoint, userId);
+        const userUsesdPoint = await productDao.cost(userPoint, userId); // 결제 유저의 금액을 받아 차감 포인트 적립
        
-        console.log(result);
+        // 유저의 포인트 사용 내용 반영
+        const cartlist = await productDao.cartList(userId);
+        console.log(cartlist);
+
+        const payment = await productDao.payment();
+
+        // console.log(result);
 
         return result;
     }catch(err){
