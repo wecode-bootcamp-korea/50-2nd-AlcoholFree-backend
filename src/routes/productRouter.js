@@ -4,8 +4,9 @@ const productController = require("../controlles/productController");
 const verfiyToken = require("../middlewares/verfiyToken");
 
 
-router.post("/cost", verfiyToken.verfiyToken, productController.selectUserInfo);
+router.post("/costUser", verfiyToken.verfiyToken, productController.selectUserInfo);
 
+router.post("/costPay", verfiyToken.verfiyToken, productController.cost);
 
 
 
