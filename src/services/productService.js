@@ -31,13 +31,16 @@ const selectUserInfo = async(userInfo) =>{
 }
 
 
-
 // 장바구니에 담긴 상품을 정하고 결제 버튼을 눌렀을때
-const cost = async(totalprice) => {
+const cost = async(totalprice, userInfo) => {
 
     try{
-        const result = await productDao.cost(totalprice);
-        return result;
+        const userId = userInfo.id;
+        const userEmail = userInfo.email
+        console.log(userId, userEmail);
+
+        // const result = await productDao.cost(totalprice);
+        // return result;
     }catch(err){
         console.log(err);s
         const error = new Error();
