@@ -18,11 +18,10 @@ const getProducts = async(productId,userInfo,productInfo)=>{
     return products;
 };
 
-const scrap = async(user, productId, price, status, count, totalPrice) => {
-    console.log(user, productId, price, status, count, totalPrice)
-    return await productDao.scrap(user, productId, price, status, count, totalPrice);
+const addProducts = async(user, productId, price, status, count, totalPrice) => {
+    return await productDao.addProducts(user, productId, price, status, count, totalPrice);
 };
 
 module.exports ={
-    getProducts, scrap
+    getProducts, addProducts
 };

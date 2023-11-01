@@ -3,11 +3,8 @@ const router = express.Router();
 const productController = require("../controllers/productController");
 const token = require("../middlewares/verfiyToken")
 
-//상세페이지
 router.get("/detail", token.verfiyToken, productController.detailPage)
-router.post("/scrap", token.verfiyToken, productController.scrap);
-
-
+router.post("/addProducts", token.verfiyToken, productController.addProducts);
 
 module.exports ={
     router

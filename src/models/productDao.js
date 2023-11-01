@@ -47,8 +47,7 @@ const getUsers = async (userId,userEmail) => {
     }
 };
 
-
-const scrap = async(user, productId,  price, status, count, totalPrice)=>{
+const addProducts = async(user, productId,  price, status, count, totalPrice)=>{
     try{
         await appDataSource.query(
         `
@@ -70,5 +69,5 @@ const scrap = async(user, productId,  price, status, count, totalPrice)=>{
 }
 
 module.exports= {
-    getProducts, getUsers, scrap
+    getProducts, getUsers, addProducts
 }
