@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const productController = require("../controlles/productController");
-const token = require("../middlewares/verfiyToken");
+const verfiyToken = require("../middlewares/verfiyToken");
 
 
-router.get("/cart", token.verfiyToken,  productController.shoppingItems);
-router.patch("/cart/:id",token.verfiyToken, productController.itemUpdate);
-router.delete("/cart/:id",token.verfiyToken, productController.deleteItems);
+router.get("/cart", verfiyToken.verfiyToken,  productController.shoppingItems);
+router.patch("/cart/:id",verfiyToken.verfiyToken, productController.itemUpdate);
+router.delete("/cart/:id",verfiyToken.verfiyToken, productController.deleteItems);
 
 // router.get("/detail", productController.detailProduct);
 // router.post("/detail", productController.setShoppingItems);

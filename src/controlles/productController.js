@@ -50,6 +50,7 @@ const shoppingItems = async (req, res) => {
         const result = await productService.shoppingCart(userInfo);
         return res.status(202).json({message: result});
     } catch(error) {
+        console.log(error);
         return res.status(400).json({ message: "SHOPPINGITEMS ERROR", error });
     }
 };

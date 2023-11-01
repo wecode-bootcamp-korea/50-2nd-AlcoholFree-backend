@@ -143,7 +143,7 @@ const updateStatus = async(payStatus, userId) => {
 // 유저 검증
 const foundUsers = async (id, email) => {
   try {
-    const sql = await myDataSource.query(
+    const sql = await appDataSoure.query(
       `
         SELECT id, email FROM users WHERE id = ? AND email = ?
       `,[id, email]
@@ -156,7 +156,7 @@ const foundUsers = async (id, email) => {
 // 해당 User의 장바구니 정보 호출
 const getUserCart= async (userid) => {
   try {
-    const sql = await myDataSource.query( `
+    const sql = await appDataSoure.query( `
       SELECT Products.id, Products.productImg, Products.name, Products.price, ShoppingItems.status, ShoppingItems.count, Products.quantity, Products.origin, Products.avm
       FROM 
         ShoppingItems 
@@ -172,7 +172,7 @@ const getUserCart= async (userid) => {
 // 상품 갯수를 파악 함
 const getItemsQuantity = async (id) => {
   try {
-    const sql = await myDataSource.query(
+    const sql = await appDataSoure.query(
       `
         SELECT quantity 
           FROM  Products
@@ -187,7 +187,7 @@ const getItemsQuantity = async (id) => {
 // Update SopphinItems Count
 const updateItemCount = async (productId, userId, count) => {
   try {
-    const sql = await myDataSource.query(
+    const sql = await appDataSoure.query(
       `
         UPDATE ShoppingItems 
           SET count = ?, totalPrice = totalPrice + price
@@ -202,7 +202,7 @@ const updateItemCount = async (productId, userId, count) => {
 // 상품 삭제
 const deleteItem = async (productId, userId) => {
   try {
-    const sql = await myDataSource.query(
+    const sql = await appDataSoure.query(
       `
       DELETE 
         FROM ShoppingItems
