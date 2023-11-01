@@ -1,9 +1,10 @@
 const productDao = require('../models/productDao');
 
-const getProducts = async(productId,userInfo)=>{
+const getProducts = async(productId,userInfo,productInfo)=>{
     // 토큰 값 꺼내 저장
     const userId = userInfo.id;
     const userEmail = userInfo.email;
+
     // DB에 토큰에 꺼낸 값들을 넣어 비교 
     const checkUser = await productDao.getUsers(userId,userEmail);
     // DB에 꺼낸 id와 email을 변수에 따로 저장 (이유 : 해당 사항이 없다면 조건문에 걸려 return 하기 위해)
@@ -17,7 +18,11 @@ const getProducts = async(productId,userInfo)=>{
     return products;
 };
 
+const scrap = async(user, productId, price, status, count, totalPrice) => {
+    console.log(user, productId, price, status, count, totalPrice)
+    return await productDao.scrap(user, productId, price, status, count, totalPrice);
+};
 
 module.exports ={
-    getProducts
+    getProducts, scrap
 };

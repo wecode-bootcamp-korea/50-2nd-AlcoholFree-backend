@@ -5,6 +5,7 @@ const token = require("../middlewares/verfiyToken")
 
 //상세페이지
 router.get("/detail", token.verfiyToken, productController.detailPage)
+router.post("/scrap", token.verfiyToken, productController.scrap);
 
 
 
