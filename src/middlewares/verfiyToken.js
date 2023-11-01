@@ -19,7 +19,7 @@ const secretkey = process.env.JWT_SECRET;
 // // }
 
 const verfiyToken = async(req,res,next) => {
-    const jwtToken = req.headers.token;
+    const jwtToken = req.headers.authorization;
 
     if(!jwtToken) {
         res.status(403).json({message:"권한이 없습니다"})

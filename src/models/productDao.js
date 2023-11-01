@@ -48,9 +48,27 @@ const getUsers = async (userId,userEmail) => {
 };
 
 
-
-
+const scrap = async(user, productId,  price, status, count, totalPrice)=>{
+    try{
+        await appDataSource.query(
+        `
+        INSERT INTO ShoppingItems (
+            userId,
+            productId,
+            price,
+            status,
+            count,
+            totalPrice
+            )
+            VALUES (?, ?, ?, ?, ?, ?);
+        `,
+        [user, productId,  price, status, count, totalPrice]
+    );
+    }catch(error){
+        throw error;
+    }
+}
 
 module.exports= {
-    getProducts, getUsers
+    getProducts, getUsers, scrap
 }
