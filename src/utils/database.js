@@ -1,5 +1,5 @@
 const { DataSource, IsNull } = require('typeorm');
-const path = require("path")
+const path = require("path");
 const envFilePaht = path.resolve(__dirname, "../utils", ".env");
 const dotenv = require("dotenv");
 const { error } = require('console');
