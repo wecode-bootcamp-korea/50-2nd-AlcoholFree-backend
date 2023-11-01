@@ -25,7 +25,7 @@ const login = async(email, password) => {
 
         //복호화된 패스워드와 로그인 요청한 패스 워드를 비교하여 false를 반환 할 경우
         if(decode === false){
-            return false
+            return false;
         }
 
         //로그인
