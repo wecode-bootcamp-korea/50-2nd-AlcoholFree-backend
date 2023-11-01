@@ -4,24 +4,23 @@ const detailPage = async(req,res) =>{
     
         const {productId} = req.query;
 
-
-
         const products = await productService.getProducts(productId, userInfo, productsInfo)
 
         console.log("resulte 값:",products);
         return res.status(200).json({products});
     };
 
-    const scrap = async(req, res)=>{
+    const addProducts = async(req, res)=>{
+        
         const user = req.user.id;
         const {productId, price, status, count, totalPrice} = req.body;
-        console.log(user,productId,price,status,count, totalPrice)
-        await productService.scrap(user, productId, price, status, count, totalPrice);
+
+        await productService.addProducts(user, productId, price, status, count, totalPrice);
         res.status(201).json({message: "succeeded"});
     };
 
 module.exports = { 
-    detailPage, scrap
+    detailPage, addProducts
 } 
 
 
