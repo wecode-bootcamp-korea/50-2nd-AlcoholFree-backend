@@ -1,11 +1,11 @@
-const token = require("jsonwebtoken");
+const authorization = require("jsonwebtoken");
 const secetkey = process.env.SECRET_KEY;
 // console.log(secetkey)
 // const { decode } = require("punycode");
 
 // 토큰 검증
 const verfiyToken = async (req, res, next) => {
-    const jwtToken = req.headers.token;
+    const jwtToken = req.headers.authorization;
     // console.log(jwtToken);
 
     if (!jwtToken) {

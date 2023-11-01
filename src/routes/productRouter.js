@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const productController = require("../controlles/productController");
-const token = require("../middlewares/verfiyToken");
+const authorization = require("../middlewares/verfiyToken");
 
 
 //메인 화면
-router.get('/main', token.verfiyToken, productController.selectProduct);
+router.get('/main', authorization.verfiyToken, productController.selectProduct);
 
 
 
