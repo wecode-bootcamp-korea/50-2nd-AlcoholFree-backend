@@ -22,7 +22,7 @@ const select = async(email) => {
 // 로그인
 const login = async(email) => {
   try{
-    const result = await myDataSource.query(
+    const result = await database.appDataSource.query(
       `
         select * from users
         where email = ?
