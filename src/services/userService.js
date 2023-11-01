@@ -33,8 +33,6 @@ const signup = async(email, password, name, phoneNumber, birthDay, address) => {
         "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{10,20})"
     );
 
-    console.log(password);
-
     if(!pwValidation.test(password)){
         const err = new Error();
         err.message = "패스워드는 대,소문자 및 숫자,특수문자 1자 이상을 이용하여 10~20자리를 만들어 주세요."
