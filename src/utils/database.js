@@ -24,4 +24,5 @@ appDataSoure.initialize()
 
 module.exports = {
     appDataSoure
-}
+};
+
