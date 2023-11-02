@@ -1,6 +1,6 @@
 const productDao = require('../models/productDao');
 
-const getProducts = async(productId,userInfo,productInfo)=>{
+const getProducts = async(productId,userInfo)=>{
     // 토큰 값 꺼내 저장
     const userId = userInfo.id;
     const userEmail = userInfo.email;
@@ -11,17 +11,17 @@ const getProducts = async(productId,userInfo,productInfo)=>{
     const dbUserId = checkUser[0].id;
     const dbUserEmail = checkUser[0].email;
 
-    const products = await productDao.getProducts(productId);
     if(userId !== dbUserId || userEmail !== dbUserEmail) {
         return "해당 유저가 없습니다.";
     }
+    const products = await productDao.getProducts(productId);
     return products;
 };
 
-const addProducts = async(user, productId, price, status, count, totalPrice) => {
-    return await productDao.addProducts(user, productId, price, status, count, totalPrice);
+const createShoppingItem = async(user, productId, price, status, count, totalPrice) => {
+    return await productDao.createShoppingItem(user, productId, price, status, count, totalPrice);
 };
 
 module.exports ={
-    getProducts, addProducts
+    getProducts, createShoppingItem
 };

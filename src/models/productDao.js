@@ -47,9 +47,9 @@ const getUsers = async (userId,userEmail) => {
     }
 };
 
-const addProducts = async(user, productId,  price, status, count, totalPrice)=>{
+const createShoppingItem = async(user, productId,  price, status, count, totalPrice)=>{
     try{
-        await appDataSource.query(
+        const add = await appDataSource.query(
         `
         INSERT INTO ShoppingItems (
             userId,
@@ -63,11 +63,12 @@ const addProducts = async(user, productId,  price, status, count, totalPrice)=>{
         `,
         [user, productId,  price, status, count, totalPrice]
     );
+    return add
     }catch(error){
         throw error;
     }
 }
 
 module.exports= {
-    getProducts, getUsers, addProducts
+    getProducts, getUsers, createShoppingItem
 }
