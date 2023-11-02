@@ -1,5 +1,4 @@
-const database = require("../utils/database")
-
+const database = require("../utils/database");
 // 유저 정보 조회
 const selectUserInfo = async(userId, email) => {
     try{
@@ -169,7 +168,7 @@ const updateItemCount = async (productId, userId, count) => {
 const deleteItem = async (productId, userId) => {
   console.log(productId, userId)
   try {
-    const sql = await database.appDataSoure.query(
+    const sql = await database.appDataSource.query(
 
       `
         DELETE FROM ShoppingItems
@@ -187,7 +186,7 @@ const deleteItem = async (productId, userId) => {
 // 상품 갯수를 파악 함
 const getItemsQuantity = async (id) => {
   try {
-    const sql = await database.appDataSoure.query(
+    const sql = await database.appDataSource.query(
       `
         SELECT quantity 
           FROM  Products
@@ -201,7 +200,7 @@ const getItemsQuantity = async (id) => {
 };
 const getProducts = async (productId) => {
   try {
-    const result = appDataSource.query(
+    const result = database.appDataSource.query(
       `
       SELECT
       Products.id,
@@ -230,7 +229,7 @@ const getProducts = async (productId) => {
 
 const getUsers = async (userId, userEmail) => {
   try {
-    const sql = await appDataSource.query(`
+    const sql = await database.appDataSource.query(`
           SELECT 
           id,
           email
@@ -248,7 +247,7 @@ const getUsers = async (userId, userEmail) => {
 
 const createShoppingItem = async (user, productId, price, status, count, totalPrice) => {
   try {
-    const add = await appDataSource.query(
+    const add = await database.appDataSource.query(
       `
       INSERT INTO ShoppingItems (
           userId,
@@ -260,8 +259,9 @@ const createShoppingItem = async (user, productId, price, status, count, totalPr
           )
           VALUES (?, ?, ?, ?, ?, ?);
       `,
-      [user, productId, price, status, count, totalPrice]
+      [user, productId, 1000, "dsdsd", count, totalPrice]
     );
+    console.log(add);
     return add
   } catch (error) {
     throw error;
@@ -271,7 +271,7 @@ const createShoppingItem = async (user, productId, price, status, count, totalPr
 // 장바구니에 상품 중복 id 체크
 const checkItemCart = async (userId, productId) => {
   try {
-    const sql = await myDataSource.query(
+    const sql = await database.appDataSource.query(
       `
         SELECT COUNT(productId) 
         FROM ShoppingItems
@@ -286,13 +286,20 @@ const checkItemCart = async (userId, productId) => {
 // 장바구니에 기존 상품 있을 시, Count만 +1 시킨다.
 const plusItemCount = async (count, userId, productId) => {
   try {
-    const sql = await myDataSource.query(
+    const sql = await database.appDataSource.query(
       `
         UPDATE ShoppingItems 
           SET count = count + ?
             WHERE userId = ? AND productId = ?
       `, [count, userId, productId]
     );
+    const update = await database.appDataSource.query(
+      `
+        UPDATE ShoppingItems
+          SET status = "미결제" 
+          WHERE userId = ? AND productId = ?
+      `
+      , [userId, productId]);
     return sql;
   } catch (error) {
     throw error;
@@ -327,22 +334,22 @@ const getProductInfo = async (productId) => {
   }
 };
 // 장바구니에 추가 
-const insertProducts = async (userId, productInfo) => {
+const insertProducts = async (userId, productInfo, quantity) => {
   try {
     const result = await database.appDataSource.query(
       `
       INSERT INTO ShoppingItems (userId, productId, price, count, totalPrice)
       VALUES (?, ?, ?, ?, ?);
       `,
-      [userId, productInfo.id, productInfo.price, 1, productInfo.price]
+      [userId, productInfo.id, productInfo.price, quantity, productInfo.price]
     );
-    const sql = await myDataSource.query(
+    const sql = await database.appDataSource.query(
       `
         UPDATE ShoppingItems
           SET status = "미결제"
-          WHERE userId = ?
+          WHERE userId = ? AND productId = ?
       `
-      , [userId]);
+      , [userId, productInfo.id]);
     return result;
   } catch (error) {
     throw error;
@@ -394,7 +401,19 @@ const selectProduct = async () => {
       throw err;
   }
 }
-
+const countUpdate = async (userId) => {
+  try {
+    const sql = await database.appDataSource.query(
+      `
+        UPDATE ShoppingItems
+        SET count = 0
+        WHERE userId = ?
+      `,[userId]
+    );
+  } catch (error) {
+    throw error;
+  }
+}
 module.exports = {
   foundUsers,
   getUserCart,
@@ -419,5 +438,6 @@ module.exports = {
   cartList, 
   updateStatus,
   realUser,
-  selectProduct
+  selectProduct,
+  countUpdate
 }
