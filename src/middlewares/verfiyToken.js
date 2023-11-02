@@ -3,10 +3,9 @@ const secetkey = process.env.SECRET_KEY
 const { decode } = require("punycode");
 
 // 토큰 검증
-const verfiyToken  = async(req, res, next) => {
-    const jwtToken = req.headers.token;
-    console.log(jwtToken);
-
+const verfiyToken  = async (req, res, next) => {
+    const jwtToken = req.headers.authorization;
+  
     if(!jwtToken){
         res.status(403).json({message : "권한이 없습니다"})
     }else{
@@ -20,7 +19,6 @@ const verfiyToken  = async(req, res, next) => {
     }
 };
 
-
 // 토큰 검증
 const tokenDecode = async(jwtToken, secetKey) => {
     return token.verify(jwtToken, secetKey);
@@ -33,4 +31,4 @@ const createToken = async(id, email) => {
 
 module.exports = {
     verfiyToken, tokenDecode, createToken
-};
+}

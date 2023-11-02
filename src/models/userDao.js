@@ -42,7 +42,7 @@ const login = async(email) => {
   }
 }
 
-
 module.exports = {
     select, login
 }
+

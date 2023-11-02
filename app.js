@@ -5,7 +5,6 @@ const app = express();
 // env 파일 경로 지정
 const path = require("path");
 const envPath = path.join(__dirname, "./src/utils",".env")
-
 const dotenv = require("dotenv");
 dotenv.config({path: envPath});
 
@@ -22,14 +21,13 @@ const server = http.createServer(app);
 const port = process.env.PORT
 
 const start = async() => {
-    try{
+    try {
         server.listen(port, () =>{
             console.log(`Server is listening on ${port}`);
         });
-    }catch(err){
+    } catch(err) {
         console.log(err)
     }
-
 }
 
 start();
