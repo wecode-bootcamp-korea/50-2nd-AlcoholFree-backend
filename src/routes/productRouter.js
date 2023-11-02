@@ -8,9 +8,10 @@ router.get("/cart", token.verfiyToken,  productController.shoppingItems);
 router.patch("/cart/:id", token.verfiyToken, productController.itemUpdate);
 // 장바구니 상품 삭제
 router.delete("/cart/:id", token.verfiyToken, productController.deleteItems);
-router.get("/detail/:id", token.verfiyToken, productController.detailPage)
-router.post("/", token.verfiyToken, productController.createShoppingItem);
-
+// 상품 상세 보기
+router.get("/detail", token.verfiyToken, productController.detailProduct);
+// 상품 장바구니 추가
+router.post("/detail", token.verfiyToken, productController.setShoppingItems);
 module.exports ={
     router
 }

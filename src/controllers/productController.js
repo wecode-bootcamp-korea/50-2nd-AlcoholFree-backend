@@ -55,10 +55,35 @@ const createShoppingItem = async(req, res)=>{
         await productService.createShoppingItem(user, productId, price, status, count, totalPrice);
         res.status(201).json({message: "succeeded"});
 };
+// 장바구니에 데이터 넣기
+const setShoppingItems = async(req, res) => {
+    try {
+        const userInfo = req.user;
+        const {productId, count} = req.body;
+        console.log("set");
+        const product = await productService.inserBaskets(userInfo, productId, count );
+        return res.status(202).json({message: "SUCCESS INSERT PRODUCT"});
+    } catch(error) {
+        return res.status(400).json({ message: "SHOPPINGITEMS ERROR", error});
+    }
+};
+// 상세 보기
+const detailProduct = async(req, res) => {
+    try {
+        const userInfo = req.user;
+        const {productId} = req.body;
+        const products = await productService.deleteItems(userInfo, productId, count);
+        return res.status(202).json({message: "SUCCESS SHOW PRODUCT DETAIL", products});
+    } catch (error) {
+        return res.status(500).json({ message : "SHOW PRODUCT ERROR", error});
+    }
+};
 module.exports = {
     shoppingItems,
     itemUpdate,
     deleteItems,
     detailPage, 
-    createShoppingItem
+    createShoppingItem,
+    setShoppingItems,
+    detailProduct
 };
