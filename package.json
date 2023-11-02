@@ -16,7 +16,6 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
-    "mysql": "^2.18.1",
     "mysql2": "^3.6.2",
     "path": "^0.12.7",
     "typeorm": "^0.3.17"
