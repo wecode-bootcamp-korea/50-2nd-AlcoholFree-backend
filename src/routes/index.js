@@ -7,4 +7,5 @@ router.use("/users", userRouter.router);
 const productRouter = require("./productRouter");
 router.use("/products", productRouter.router) 
 
+
 module.exports = router;

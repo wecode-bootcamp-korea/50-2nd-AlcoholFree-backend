@@ -1,7 +1,9 @@
 const database = require("../utils/database")
 
-  // 요청 이메일 존재 여부 확인
+
+// 요청 이메일 존재 여부 확인
 const selectUserDataByEmail = async(email) => {
+  try{
     const result = await database.appDataSource.query(
       `
       SELECT 
@@ -34,7 +36,27 @@ const selectUserDataByEmail = async(email) => {
 
 }
 
+// 로그인
+const login = async(email) => {
+  try{
+    const result = await database.appDataSource.query(
+      `
+        SELECT 
+        id,
+        email
+        FROM users 
+        WHERE email = ?;
+      `, [email]
+    );
+    return result
+  }catch(err){
+    const error = new Error();
+    error.message = "로그인중 에러가 발생하였습니다"
+    throw error;
+  }
+}
+
 module.exports = {
-  selectUserDataByEmail, signup
+    selectUserDataByEmail, login, signup
 }
 

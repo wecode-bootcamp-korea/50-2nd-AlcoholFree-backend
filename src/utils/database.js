@@ -1,13 +1,12 @@
-
 const { DataSource } = require('typeorm');
-const path = require("path");
+const path = require("path")
 const envFilePaht = path.resolve(__dirname, "../utils", ".env");
 const dotenv = require("dotenv");
 const { error } = require('console');
 dotenv.config({path :envFilePaht });
 
-const appDataSoure = new DataSource({
-    type: process.env.TYPEORM_CONNECTION,
+const appDataSource = new DataSource({
+	  type: process.env.TYPEORM_CONNECTION,
     host: process.env.TYPEORM_HOST,
     port: process.env.TYPEORM_PORT,
     username: process.env.TYPEORM_USERNAME,
