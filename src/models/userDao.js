@@ -2,7 +2,6 @@ const database = require("../utils/database")
 
   // 요청 이메일 존재 여부 확인
 const selectUserDataByEmail = async(email) => {
-
     const result = await database.appDataSource.query(
       `
       SELECT 
@@ -38,3 +37,4 @@ const selectUserDataByEmail = async(email) => {
 module.exports = {
   selectUserDataByEmail, signup
 }
+

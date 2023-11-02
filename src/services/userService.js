@@ -69,5 +69,5 @@ const signup = async(email, password, name, phoneNumber, birthDay, address) => {
 
 
 module.exports = {
-    signup
+  signup
 }

@@ -10,10 +10,16 @@ router.post("/signup", userController.signup)
 
 =======
 const userController = require("../controllers/userController");
+// const token = require("../middlewares/verfiyToken");
 
-router.post("/signup", userController.signup)
+//회원가입
+// router.post("/signup", userController.signup)
+
+//로그인
+
+//장바구니
 
 >>>>>>> main
 module.exports = {
     router
-}
+};
