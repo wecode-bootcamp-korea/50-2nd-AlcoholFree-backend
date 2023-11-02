@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+<<<<<<< HEAD
 const userController = require("../controlles/userController");
 
 
@@ -7,6 +8,12 @@ const userController = require("../controlles/userController");
 router.post("/signup", userController.signup)
 
 
+=======
+const userController = require("../controllers/userController");
+
+router.post("/signup", userController.signup)
+
+>>>>>>> main
 module.exports = {
     router
 }
