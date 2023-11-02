@@ -1,7 +1,7 @@
 const { DataSource } = require('typeorm');
-const path = require("path")
+const path = require("path");
 const envFilePaht = path.resolve(__dirname, "../utils", ".env");
-const dotenv = require("dotenv")
+const dotenv = require("dotenv");
 dotenv.config({path :envFilePaht });
 
 const myDataSource = new DataSource({
@@ -11,7 +11,7 @@ const myDataSource = new DataSource({
     username: process.env.TYPEORM_USERNAME,
     password: process.env.TYPEORM_PASSWORD,
     database: process.env.TYPEORM_DATABASE
-})
+});
 
 myDataSource.initialize()
   .then(() => {
@@ -23,20 +23,6 @@ myDataSource.initialize()
   });
 
 
-  const signup = async () => {
-	try {
-		const result = myDataSource.query(
-            `
-            `
-        )
-	} catch (err) {
-		const error = new Error('INVALID_DATA_INPUT');
-		error.statusCode = 500;
-		throw error;
-	}
-};
-
-
 module.exports = {
-    signup
-}
+  
+};

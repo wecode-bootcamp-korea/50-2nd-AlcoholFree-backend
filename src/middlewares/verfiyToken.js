@@ -1,48 +1,35 @@
 const token = require("jsonwebtoken");
-const secretkey = process.env.JWT_SECRET;
-// // const productService = require("../services/productService")
+const secetkey = process.env.SECRET_KEY;
+// console.log(secetkey)
+// const { decode } = require("punycode");
 
-// // const token = async(req, res, next) => {
-// //     const accessToken = req.headers.authorization;
-
-// //     try{
-// //         const payload = jwt.verify(accessToken, process.env.JWT_SECRET);
-// //         req.user = await productService.getProducts();
-// //         next()
-// //     }catch {
-// //         res.status(401).json({message:"INVALID_ACCESS_TOKEN"});
-// //     }
-// // };
-
-// // module.exports = {
-// //     token
-// // }
-
-const verfiyToken = async(req,res,next) => {
+// 토큰 검증
+const verfiyToken  = async (req, res, next) => {
     const jwtToken = req.headers.authorization;
+    // console.log(jwtToken);
 
-    if(!jwtToken) {
-        res.status(403).json({message:"권한이 없습니다"})
-    } else {
-        try {
-            const decoded = await tokenDecode(jwtToken,secretkey) ;
+    if(!jwtToken){
+        res.status(403).json({message : "권한이 없습니다"})
+    }else{
+        try{
+            const decoded = await tokenDecode(jwtToken, secetkey);
             req.user = decoded;
             next();
-        } catch(err){
-            return res.status(403).json({message:"권한이 없습니다", err})
+        }catch(err){
+            return res.status(403).json({message : "권한이 없습니다."})
         }
     }
 };
-
-const tokenDecode = async(jwtToken, secretkey) => {
-        return token.verify(jwtToken, secretkey);
+// 토큰 검증
+const tokenDecode = async(jwtToken, secetKey) => {
+    return token.verify(jwtToken, secetKey);
 };
 
-const createToken = async(id,email) => {
+const createToken = async(id, email) => {
     const payload = {id, email};
-    return token.sign(payload, secretkey);
+    return token.sign(payload, secetkey);
 };
 
 module.exports = {
     verfiyToken, tokenDecode, createToken
-}
+};

@@ -1,11 +1,8 @@
 const userService = require("../services/userService");
+const jwtTokent = require("../middlewares/verfiyToken");
 
-
-const signup = async(req, res) => {
-
-}
 
 
 module.exports = {
-    signup
-}
+ 
+};
