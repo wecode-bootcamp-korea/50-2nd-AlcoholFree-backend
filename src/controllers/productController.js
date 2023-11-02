@@ -10,17 +10,17 @@ const detailPage = async(req,res) =>{
         return res.status(200).json({products});
     };
 
-    const addProducts = async(req, res)=>{
-        
+    const createShoppingItem = async(req, res)=>{
+
         const user = req.user.id;
         const {productId, price, status, count, totalPrice} = req.body;
 
-        await productService.addProducts(user, productId, price, status, count, totalPrice);
+        await productService.createShoppingItem(user, productId, price, status, count, totalPrice);
         res.status(201).json({message: "succeeded"});
     };
 
 module.exports = { 
-    detailPage, addProducts
+    detailPage, createShoppingItem
 } 
 
 
