@@ -8,6 +8,8 @@ router.get("/cart", token.verfiyToken,  productController.shoppingItems);
 router.patch("/cart/:id", token.verfiyToken, productController.itemUpdate);
 // 장바구니 상품 삭제
 router.delete("/cart/:id", token.verfiyToken, productController.deleteItems);
+router.get("/detail/:id", token.verfiyToken, productController.detailPage)
+router.post("/", token.verfiyToken, productController.createShoppingItem);
 
 module.exports ={
     router
