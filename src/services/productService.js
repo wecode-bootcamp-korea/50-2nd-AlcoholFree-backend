@@ -4,17 +4,17 @@ const verfiyToken = require("../middlewares/verfiyToken");
 
 
 //메인
-const selectProduct = async (customerIf) => {
+const selectProduct = async (customerInformation) => {
     try {
-        
-        const customerId = customerIf.id;
-        const customerEm = customerIf.email;
-        
+
+        const customerId = customerInformation.id;
+        const customerEm = customerInformation.email;
+
         const customerCheck = await productDao.realUser(customerId, customerEm);
         const saveUser = customerCheck[0].id;
         const saveEmail = customerCheck[0].email;
-        
-        if(customerId !== saveUser || customerEm !== saveEmail) {
+
+        if (customerId !== saveUser || customerEm !== saveEmail) {
             return "No information found."
         }
 
