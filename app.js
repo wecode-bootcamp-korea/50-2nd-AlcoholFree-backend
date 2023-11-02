@@ -10,7 +10,7 @@ dotenv.config({path: envPath});
 
 const cors = require("cors");
 const morgan = require("morgan");
-const routes = require("./src/routes")
+const routes = require("./src/routes");
 
 app.use(cors());
 app.use(morgan("combined"));
@@ -21,7 +21,7 @@ const server = http.createServer(app);
 const port = process.env.PORT
 
 const start = async() => {
-    try {
+    try{
         server.listen(port, () =>{
             console.log(`Server is listening on ${port}`);
         });

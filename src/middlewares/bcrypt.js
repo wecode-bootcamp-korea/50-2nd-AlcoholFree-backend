@@ -7,7 +7,7 @@ const makehash = async(password, saltRound) => {
 
 //패스워드 복호화
 const decode = async(password, hashedPassword) => {
-    return await bcrypt.compare(password, hashedPassword)
+    return await bcrypt.compare(password, hashedPassword);
 };
 
 module.exports = {

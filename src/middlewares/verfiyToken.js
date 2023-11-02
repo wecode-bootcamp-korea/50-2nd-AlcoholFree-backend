@@ -17,17 +17,17 @@ const verfiyToken  = async (req, res, next) => {
             return res.status(403).json({message : "권한이 없습니다."})
         }
     }
-};
+}
 
 // 토큰 검증
 const tokenDecode = async(jwtToken, secetKey) => {
-    return token.verify(jwtToken, secetKey);
-};
+    return jwt.verify(jwtToken, secetKey);
+}
 
 const createToken = async(id, email) => {
     const payload = {id, email};
-    return token.sign(payload, secetkey);
-};
+    return token.sign(payload, secetkey)
+}
 
 module.exports = {
     verfiyToken, tokenDecode, createToken
