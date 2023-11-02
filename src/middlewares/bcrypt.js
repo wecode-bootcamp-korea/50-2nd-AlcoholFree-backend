@@ -1,5 +1,4 @@
-// const bcrypt = require("bcrypt");
-
+const bcrypt = require("bcrypt");
 
 // 패스워드 암호화
 const makehash = async(password, saltRound) => {
