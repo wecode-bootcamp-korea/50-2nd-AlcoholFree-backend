@@ -9,23 +9,18 @@ const envPath = path.join(__dirname, "./src/utils",".env")
 const dotenv = require("dotenv");
 dotenv.config({path: envPath});
 
-
 const cors = require("cors");
 const morgan = require("morgan");
 const routes = require("./src/routes")
-
 
 app.use(cors());
 app.use(morgan("combined"));
 app.use(express.json());
 app.use(routes);
 
-
-
 const server = http.createServer(app);
 const port = process.env.PORT
 console.log(port);
-
 
 const start = async() => {
     try{
@@ -35,7 +30,6 @@ const start = async() => {
     }catch(err){
         console.log(err)
     }
-
 }
 
 start();
