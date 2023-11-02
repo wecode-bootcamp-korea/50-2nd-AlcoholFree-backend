@@ -1,9 +1,9 @@
 const productDao = require('../models/productDao');
 const bcrypt = require("../middlewares/bcrypt");
-const verfiyToken = require("../middlewares/verfiyToken");
+const token = require("../middlewares/verfiyToken");
 
 
-//메인
+
 const selectProduct = async (customerInformation) => {
     try {
 
@@ -18,13 +18,10 @@ const selectProduct = async (customerInformation) => {
             return "No information found."
         }
 
-        // Dao에서 제품 목록 가져오기
         const productL = await productDao.selectProduct();
 
-        // 제품 목록 반환
         return productL;
     } catch (err) {
-        // 에러 발생 시 에러를 던집니다.
         throw err;
     }
 };

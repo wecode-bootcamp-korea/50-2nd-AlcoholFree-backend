@@ -10,15 +10,15 @@ const myDataSource = new DataSource({
     database: process.env.TYPEORM_DATABASE
 })
 
-myDataSource.initialize()//데이터베이스 연결 초기화 시도
-    .then(() => { //초기화가 성공 되었을 때
+myDataSource.initialize()
+    .then(() => { 
         console.log("Data Source has been initialized!")
     })
-    .catch(error => { //초기화 중에 오류가 발생 하였을 때
+    .catch(error => { 
         console.error("Data Source initialization error:", error)
     })
 
-//유저검증
+
 const realUser = async (id, email) => {
     try {
         const userCheck = await myDataSource.query(
@@ -31,10 +31,8 @@ const realUser = async (id, email) => {
     }
 };
 
-
-//메인
 const selectProduct = async () => {
-    try {//db에서 제품 정보 조회하는 쿼리 실행
+    try {
         const productMain = await myDataSource.query(`
             SELECT 
             Products.id, 
@@ -51,10 +49,8 @@ const selectProduct = async () => {
             ORDER BY Products.categoryId ASC
         `);
 
-        //console.log("typeorm return data: ", productMain)
-        //조회된 제품 정보 반환
         return productMain
-    } catch (err) {//에러 발생하면 에러 던지기
+    } catch (err) {
         throw err;
     }
 }
