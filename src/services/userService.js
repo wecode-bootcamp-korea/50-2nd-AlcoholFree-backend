@@ -16,22 +16,18 @@ const login = async(email, password) => {
         }
 
         const dbpassword = dbdata[0].password;
-
-        // if(dbpassword.length === 0){
-        //     return false
-        // }
         const decode = await bcrypt.decode(password, dbpassword);
 
         //복호화된 패스워드와 로그인 요청한 패스 워드를 비교하여 false를 반환 할 경우
         if(decode === false){
-            return false;
+            throw error;
         }
 
         //로그인
         const result = await userDao.login(email);
 
         if(result.length === 0){
-            return false;
+            throw error;
         } 
 
         // 토근 생성
@@ -41,7 +37,8 @@ const login = async(email, password) => {
         return jwtToken;
 
     }catch(err){
-        throw err
+        const error = new Error();
+        throw error;
     }
 }
 

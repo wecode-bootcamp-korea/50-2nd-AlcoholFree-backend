@@ -23,14 +23,15 @@ const select = async(email) => {
 
 // 로그인
 const login = async(email) => {
+
   try{
     const result = await database.appDataSource.query(
       `
         SELECT 
-          *
-        FROM USERS
-        WHERE email = ?
-      
+        id,
+        email
+        FROM users 
+        WHERE email = ?;
       `, [email]
     );
     return result
