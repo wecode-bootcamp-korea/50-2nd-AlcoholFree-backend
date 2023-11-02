@@ -4,6 +4,29 @@ const { json } = require("body-parser");
 const bcrypt = require("../middlewares/bcrypt");
 const verfiyToken = require("../middlewares/verfiyToken");
 
+
+
+const selectProduct = async (customerInformation) => {
+    try {
+
+        const customerId = customerInformation.id;
+        const customerEm = customerInformation.email;
+
+        const customerCheck = await productDao.realUser(customerId, customerEm);
+        const saveUser = customerCheck[0].id;
+        const saveEmail = customerCheck[0].email;
+
+        if (customerId !== saveUser || customerEm !== saveEmail) {
+            return "No information found."
+        }
+
+        const productL = await productDao.selectProduct();
+
+        return productL;
+    } catch (err) {
+        throw err;
+    }
+};
 const shoppingCart = async (userInfo) => {
     try {
         const userId = userInfo.id;
@@ -88,6 +111,8 @@ module.exports = {
     updateQuantity,
     deleteShoppingItems,
     getProducts, 
-    createShoppingItem
+    createShoppingItem,
+    selectProduct
 };
-    
+
+

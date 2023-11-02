@@ -1,7 +1,44 @@
-const { SimpleConsoleLogger } = require("typeorm");
+const { DataSource } = require('typeorm');
 const database = require("../utils/database");
 const {appDataSource} = require("./db");
 
+
+
+const realUser = async (id, email) => {
+    try {
+        const userCheck = await database.appDataSoure.query(
+            "SELECT id, email FROM users WHERE id = ? AND email = ?",
+            [id, email]
+        );
+        return userCheck;
+    } catch (err) {
+        throw err;
+    }
+};
+
+const selectProduct = async () => {
+    try {
+        const productMain = await database.appDataSoure.query(`
+            SELECT 
+            Products.id, 
+            Products.price, 
+            Products.name, 
+            Products.content, 
+            Products.origin, 
+            Products.productImg,
+            Products.categoryId,
+            Categories.categoryName
+            FROM Products
+            INNER JOIN Categories
+            ON Categories.id = Products.categoryId
+            ORDER BY Products.categoryId ASC
+        `);
+
+        return productMain
+    } catch (err) {
+        throw err;
+    }
+}
 // 유저 검증
 const foundUsers = async (id, email) => {
   try {
@@ -166,6 +203,8 @@ module.exports = {
   updateItemCount,
   getProducts, 
   getUsers, 
-  createShoppingItem
-  
+  createShoppingItem,
+  selectProduct,
+  realUser
 }
+
