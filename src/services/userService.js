@@ -4,8 +4,6 @@ const { json } = require("body-parser");
 const bcrypt = require("../middlewares/bcrypt");
 const verfiyToken = require("../middlewares/verfiyToken");
 
-
-
 //로그인
 const login = async(email, password) => {
     try{
@@ -42,14 +40,11 @@ const login = async(email, password) => {
         return jwtToken;
 
     }catch(err){
-        console.log(err);
         const error = new Error();
         error.message = "로그인중 에러가 발생 하였습니다."
         throw error
     }
 }
-
-
 
 module.exports = {
     login
