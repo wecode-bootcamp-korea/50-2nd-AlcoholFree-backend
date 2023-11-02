@@ -29,7 +29,7 @@ const verfiyToken = async(req,res,next) => {
             req.user = decoded;
             next();
         } catch(err){
-            return res.status(403).json({message:"권한이 없습니다"})
+            return res.status(403).json({message:"권한이 없습니다", err})
         }
     }
 };

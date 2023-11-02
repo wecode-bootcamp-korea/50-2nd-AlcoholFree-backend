@@ -22,7 +22,7 @@ const getProducts = async(productId) => {
         [productId]
     );
     return result
-    }catch{
+    } catch {
         const error = new Error("dataSource Error");
         error.statusCode = 400;
         throw error;
