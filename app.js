@@ -10,7 +10,7 @@ dotenv.config({path: envPath});
 
 const cors = require("cors");
 const morgan = require("morgan");
-const routes = require("./src/routes")
+const routes = require("./src/routes");
 
 app.use(cors());
 app.use(morgan("combined"));
@@ -19,7 +19,6 @@ app.use(routes);
 
 const server = http.createServer(app);
 const port = process.env.PORT
-console.log(port);
 
 const start = async() => {
     try{
