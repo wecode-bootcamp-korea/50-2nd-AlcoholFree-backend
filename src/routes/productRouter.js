@@ -1,7 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const productController = require("../controllers/productController");
-const token = require("../middlewares/verfiyToken");
+const productController = require("../controlles/productController");
+const verfiyToken = require("../middlewares/verfiyToken");
+
+
+router.post("/costUser", verfiyToken.verfiyToken, productController.selectUserInfo);
+router.post("/costPay", verfiyToken.verfiyToken, productController.cost);
+
 // 장바구니 보기
 router.get("/cart", token.verfiyToken,  productController.shoppingItems);
 // 장바구니 상품 갯수 수정
@@ -14,5 +19,4 @@ router.post("/", token.verfiyToken, productController.createShoppingItem);
 module.exports ={
     router
 }
-
 
