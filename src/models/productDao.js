@@ -116,7 +116,7 @@ const updateStatus = async(payStatus, userId) => {
 }
 
 const { SimpleConsoleLogger } = require("typeorm");
-const database = require("../utils/database");
+// const database = require("../utils/database");
 const {appDataSource} = require("./db");
 
 // 유저 검증
@@ -252,28 +252,64 @@ const getUsers = async (userId,userEmail) => {
   }
 };
 
-const createShoppingItem = async(user, productId,  price, status, count, totalPrice)=>{
-  try{
-      const add = await appDataSource.query(
+const createShoppingItem = async (user, productId, count) => {
+  try {
+      const existingItem = await appDataSource.query(
+      `
+      SELECT
+      count,
+      price
+      FROM ShoppingItems
+      WHERE userId = ?
+      AND productId = ?;
+      `,
+      [user, productId]
+      );
+      if (existingItem.length > 0) {
+      const updatedCount = parseInt(existingItem[0].count) + parseInt(count);
+      const updatedTotalPrice = existingItem[0].price * updatedCount;
+      await appDataSource.query(
+      `
+      UPDATE ShoppingItems
+      SET count = ?,
+      totalPrice = ?
+      WHERE userId = ?
+      AND productId = ?;`,
+      [updatedCount, updatedTotalPrice, user, productId]
+      );
+      return { message: "Item count updated" };
+      } else {
+      const productInfo = await appDataSource.query(
+      `
+      SELECT
+      price
+      FROM Products
+      WHERE id = ?;`,
+      [productId]
+      );
+      if (productInfo.length === 0) {
+          throw new Error('Product not found');
+      }
+      const price = productInfo[0].price;
+      await appDataSource.query(
       `
       INSERT INTO ShoppingItems (
           userId,
           productId,
           price,
           status,
-          count,
-          totalPrice
+          count
           )
-          VALUES (?, ?, ?, ?, ?, ?);
-      `,
-      [user, productId,  price, status, count, totalPrice]
-  );
-  return add
-  }catch(error){
+          VALUES (?, ?, ?, ?, ?);
+          `,
+          [user, productId, price, "미결제", count]
+      );
+      return { message: "New item added to shopping cart" };
+      }
+  } catch (error) {
       throw error;
   }
-}
-
+};
 
 module.exports = {
   foundUsers,

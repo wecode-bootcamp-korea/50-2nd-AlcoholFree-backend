@@ -149,8 +149,8 @@ const getProducts = async(productId,userInfo)=>{
     return products;
 };
 
-const createShoppingItem = async(user, productId, price, status, count, totalPrice) => {
-    return await productDao.createShoppingItem(user, productId, price, status, count, totalPrice);
+const createShoppingItem = async(user, productId, count) => {
+    return await productDao.createShoppingItem(user, productId, count);
 };
 
 module.exports = {
@@ -158,7 +158,7 @@ module.exports = {
     updateQuantity,
     deleteShoppingItems,
     getProducts, 
-    createShoppingItem
+    createShoppingItem,
     cost, 
     selectUserInfo
 };
