@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("../controlles/userController");
+const userController = require("../controllers/userController");
 // const token = require("../middlewares/verfiyToken");
 
 //회원가입

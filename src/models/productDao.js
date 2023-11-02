@@ -1,32 +1,9 @@
-const { DataSource } = require('typeorm');
-const path = require("path")
-const envFilePaht = path.resolve(__dirname, "../utils", ".env");
-const dotenv = require("dotenv")
-dotenv.config({ path: envFilePaht });
+const database = require("../utils/database");
 
-const myDataSource = new DataSource({
-  type: process.env.TYPEORM_CONNECTION,
-  host: process.env.TYPEORM_HOST,
-  port: process.env.TYPEORM_PORT,
-  username: process.env.TYPEORM_USERNAME,
-  password: process.env.TYPEORM_PASSWORD,
-  database: process.env.TYPEORM_DATABASE
-})
-
-myDataSource.initialize()
-  .then(() => {
-    console.log("Data Source has been initialized!");
-  })
-  .catch((err) => {
-    console.error("Error occurred during Data Source initialization", err);
-    //   myDataSource.destroy();
-  });
-
-  
 // 유저 검증
 const foundUsers = async (id, email) => {
   try {
-    const sql = await myDataSource.query(
+    const sql = await database.appDataSoure.query(
       `
         SELECT id, email FROM users WHERE id = ? AND email = ?
       `,[id, email]
@@ -39,8 +16,17 @@ const foundUsers = async (id, email) => {
 // 해당 User의 장바구니 정보 호출
 const getUserCart= async (userid) => {
   try {
-    const sql = await myDataSource.query( `
-      SELECT Products.id, Products.productImg, Products.name, Products.price, ShoppingItems.status, ShoppingItems.count, Products.quantity, Products.origin, Products.avm
+    const sql = await database.appDataSoure.query( `
+      SELECT 
+        Products.id, 
+        Products.productImg, 
+        Products.name, 
+        Products.price, 
+        ShoppingItems.status, 
+        ShoppingItems.count, 
+        Products.quantity, 
+        Products.origin, 
+        Products.avm
       FROM 
         ShoppingItems 
       JOIN 
@@ -52,25 +38,9 @@ const getUserCart= async (userid) => {
     throw error;
   }
 };
-// 상품 갯수를 파악 함
-const getItemsQuantity = async (id) => {
-  try {
-    const sql = await myDataSource.query(
-      `
-        SELECT quantity 
-          FROM  Products
-        WHERE id = ?
-      `, [id]
-    );
-    return sql;
-  } catch (error) {
-    throw error;
-  }
-};
-// Update SopphinItems Count
 const updateItemCount = async (productId, userId, count) => {
   try {
-    const sql = await myDataSource.query(
+    const sql = await database.appDataSoure.query(
       `
         UPDATE ShoppingItems 
           SET count = ?, totalPrice = totalPrice + price
@@ -79,13 +49,13 @@ const updateItemCount = async (productId, userId, count) => {
     );
     return sql;
   } catch (error) {
-    throw eorr
+    throw error
   }
 };
 // 상품 삭제
 const deleteItem = async (productId, userId) => {
   try {
-    const sql = await myDataSource.query(
+    const sql = await database.appDataSoure.query(
       `
       DELETE 
         FROM ShoppingItems
@@ -97,6 +67,22 @@ const deleteItem = async (productId, userId) => {
     return error;
   }
 };
+// 상품 갯수를 파악 함
+// const getItemsQuantity = async (id) => {
+//   try {
+//     const sql = await myDataSource.query(
+//       `
+//         SELECT quantity 
+//           FROM  Products
+//         WHERE id = ?
+//       `, [id]
+//     );
+//     return sql;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+// Update SopphinItems Count
 // // 장바구니에 상품 중복 id 체크
 // const checkItemCart = async (userId, productId) => {
 //   try {
@@ -171,15 +157,15 @@ const deleteItem = async (productId, userId) => {
 //     throw error;
 //   }
 // }
-// // 장바구니에 기존 상품 있을 시, Count만 +1 시킨다.
-// const plusItemCount = async (userId, productId) => {
+// 장바구니에 기존 상품 있을 시, Count만 +1 시킨다.
+// const plusItemCount = async (count, userId, productId ) => {
 //   try {
 //     const sql = await myDataSource.query(
 //       `
 //         UPDATE ShoppingItems 
-//           SET count = count + 1
+//           SET count = count + ?
 //             WHERE userId = ? AND productId = ?
-//       `, [userId, productId]
+//       `, [count, userId, productId]
 //     );
 //     return sql;
 //   } catch (error) {
@@ -316,11 +302,10 @@ const deleteItem = async (productId, userId) => {
 //   }
 // };
 
-
 module.exports = {
   foundUsers,
   getUserCart,
-  getItemsQuantity,
+  // getItemsQuantity,
   deleteItem,
   updateItemCount,
   // getUserPoint,
@@ -332,7 +317,7 @@ module.exports = {
   // getPayment,
   // setPaymentLine,
   // updateItemStatus,
-  // getProductInfom,
+  // getProductInfo,
   // insertProducts,
   // getTotalPrice
 }

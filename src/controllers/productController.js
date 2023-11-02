@@ -1,12 +1,10 @@
-const { join } = require("path");
 const productService = require("../services/productService");
-const { json } = require("express");
 // 장바구니 상품 목록 호출
 const shoppingItems = async (req, res) => {
     try {
         const userInfo = req.user
         const result = await productService.shoppingCart(userInfo);
-        return res.status(202).json({message: result});
+        return res.status(202).json({result}); // 이 부분 수정
     } catch(error) {
         return res.status(400).json({ message: "SHOPPINGITEMS ERROR", error });
     }
@@ -17,7 +15,6 @@ const itemUpdate = async (req, res) => {
         const userInfo = req.user
         const id = req.params.id;
         const { count } = req.body;
-        console.log( "COUNT : ", count, "  PRODUCT ID : ", id);
         const result = await productService.updateQuantity(id, count, userInfo);
         if(result === "상품 재고가 부족 합니다.") {
             return res.status(202).json({ message: "상품 재고가 부족 합니다." });
@@ -42,9 +39,11 @@ const deleteItems = async (req, res) => {
 // // 장바구니에 데이터 넣기
 // const setShoppingItems = async(req, res) => {
 //     try {
-//         const {userId, productId} = req.body;
-//         const product = await productService.inserBaskets(userId, productId);
-//         return res.status(202).json({message: "SUCCESS INSERT PRODUCT", product});
+//         const userInfo = req.user;
+//         const {productId, count} = req.body;
+//         console.log("set");
+//         const product = await productService.inserBaskets(userInfo, productId, count );
+//         return res.status(202).json({message: "SUCCESS INSERT PRODUCT"});
 //     } catch(error) {
 //         return res.status(400).json({ message: "SHOPPINGITEMS ERROR", error});
 //     }
@@ -52,10 +51,10 @@ const deleteItems = async (req, res) => {
 // // 상세 보기
 // const detailProduct = async(req, res) => {
 //     try {
-//         // const userInfo = req.user
+//         const userInfo = req.user;
 //         const {productId} = req.body;
-//         const products = await productService.detailProduct(productId);
-//         return res.status(200).json({message: "SUCCESS SHOW PRODUCT DETAIL", products});
+//         const products = await productService.deleteItems(userInfo, productId, count);
+//         return res.status(202).json({message: "SUCCESS SHOW PRODUCT DETAIL", products});
 //     } catch (error) {
 //         return res.status(500).json({ message : "SHOW PRODUCT ERROR", error});
 //     }
