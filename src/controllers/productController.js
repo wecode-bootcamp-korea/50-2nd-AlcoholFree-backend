@@ -30,62 +30,18 @@ const deleteItems = async (req, res) => {
     try {
         const userInfo = req.user;
         const id = req.params.id;
+        console.log("userInfo : ", userInfo , "Param ID : ", id);
+
         const result = await productService.deleteShoppingItems(id, userInfo);
         return res.status(200).json({ message: "SUCCESS DELETE", result});
     } catch (error) {
         return res.status(400).json({ message: "ERROR DELETE ITEMS", error});
     }
 };
-// // 장바구니에 데이터 넣기
-// const setShoppingItems = async(req, res) => {
-//     try {
-//         const userInfo = req.user;
-//         const {productId, count} = req.body;
-//         console.log("set");
-//         const product = await productService.inserBaskets(userInfo, productId, count );
-//         return res.status(202).json({message: "SUCCESS INSERT PRODUCT"});
-//     } catch(error) {
-//         return res.status(400).json({ message: "SHOPPINGITEMS ERROR", error});
-//     }
-// };
-// // 상세 보기
-// const detailProduct = async(req, res) => {
-//     try {
-//         const userInfo = req.user;
-//         const {productId} = req.body;
-//         const products = await productService.deleteItems(userInfo, productId, count);
-//         return res.status(202).json({message: "SUCCESS SHOW PRODUCT DETAIL", products});
-//     } catch (error) {
-//         return res.status(500).json({ message : "SHOW PRODUCT ERROR", error});
-//     }
-// };
-// // 결제
-// const payments = async (req, res) => {
-//     try{
-//         const { userId } = req.body;
-//         const result = await productService.paymentItems(userId);
-//         return res.status(200).json({message: result});
-//     } catch(error) {
-//         console.log(error);
-//         return res.status(400).json({ message: "Error Payments items", error });
-//     }
-// }
-// const setPayment = async (req, res) => {
-//     try {
-//         const { userId } = req.body;
-//         const result = await productService.showUserPaymentList(userId);
-//         return res.status(202).json({message: result});
-//     } catch (error) {
-//         return res.status(500).json({ message: "SIRVER ERROR", error });
-//     }
-// };
 
 module.exports = {
     shoppingItems,
     itemUpdate,
     deleteItems,
-    // setShoppingItems,
-    // detailProduct,
-    // payments,
-    // setPayment
+  
 };
