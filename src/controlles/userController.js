@@ -8,7 +8,7 @@ const signup = async(req, res) => {
 
     try { 
         // 요청 정보 확인
-        if(!email || !password || !name || !phoneNumber || !birthDay || !address){
+        if(!email || !password || !name || !phoneNumber  | !birthDay || !address){
             return res.json({message : "Key_error"});
          }
         const result = await userService.signup(email, password, name, phoneNumber, birthDay, address);
