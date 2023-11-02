@@ -14,6 +14,7 @@ const login = async(email, password) => {
         if(dbdata.length === 0){
             return false;
         }
+
         const dbpassword = dbdata[0].password;
 
         // if(dbpassword.length === 0){
@@ -40,9 +41,7 @@ const login = async(email, password) => {
         return jwtToken;
 
     }catch(err){
-        const error = new Error();
-        error.message = "로그인중 에러가 발생 하였습니다."
-        throw error
+        throw err
     }
 }
 

@@ -6,17 +6,19 @@ const login = async(req, res) => {
     const {email, password} = req.body;
     try{
         const result = await userService.login(email, password);
-        const token = ""
+        console.log(result)
+        // const token = ""
 
         if(result === false){
-            return res.json({message : "USER_NOT_FOUND"})
+            return res.json({message : "user_not_found"})
         }else{
-            const token = result;
-            return res.json({accsessToken : result, message : "LOGIN_SUCCESS"});
+            // token = result;
+            return res.json({accsessToken : result, message : "login_success"});
         }
-        
+
     }catch(err){
-        return res.json({message : err})
+        console.log(err)
+        return res.json({message : "login_fail"})
     }
 }
 

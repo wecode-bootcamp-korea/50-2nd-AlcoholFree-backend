@@ -7,7 +7,8 @@ const select = async(email) => {
       `
       SELECT 
         id,
-        email
+        email,
+        password
       FROM users
       WHERE email = ?
       `, [email]
@@ -26,21 +27,18 @@ const login = async(email) => {
     const result = await database.appDataSource.query(
       `
         SELECT 
-          id,
-          email
+          *
         FROM USERS
         WHERE email = ?
       
       `, [email]
     );
-    
     return result
   }catch(err){
     const error = new Error();
     error.message = "로그인중 에러가 발생하였습니다"
     throw error;
   }
-
 }
 
 
