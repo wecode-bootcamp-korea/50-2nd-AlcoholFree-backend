@@ -1,6 +1,5 @@
 const userService = require("../services/userService");
 
-
 // 회원가입
 const signup = async(req, res) => {
     
@@ -12,17 +11,13 @@ const signup = async(req, res) => {
             return res.json({message : "Key_error"})
          }
         const result = await userService.signup(email, password, name, phoneNumber, birthDay, address);
-
-        if(result === false){
-            return res.json({message : "email이 중복 됩니다."});
-        }
-        return res.json({message : "created_success", result});
         
+        return res.json({message : "created_success"});
+
     }catch(err){
-        return res.json({massage : err})
+       return res.json({message : "created_fail"});
     }
 }
-
 
 module.exports = {
     signup
