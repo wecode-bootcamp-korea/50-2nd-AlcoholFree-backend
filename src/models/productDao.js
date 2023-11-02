@@ -1,11 +1,122 @@
-const { SimpleConsoleLogger } = require("typeorm");
-const database = require("../utils/database");
-const { appDataSource } = require("./db");
+const database = require("../utils/database")
 
+// 유저 정보 조회
+const selectUserInfo = async(userId, email) => {
+    try{
+        const result = await database.appDataSource.query(
+            `
+            select * from users
+            where id =? and email =?
+            `,[userId, email]
+        )
+        return result;
+    }catch(err){
+        console.log(err)
+        const error = new Error();
+        error.message = "유저 정보 조회 에러";
+        throw error;
+    }
+
+}
+// 장바구니에 담긴 데이터 확인
+const selectCart = async(cartId) => {
+    const result = await database.appDataSource.query(
+        `
+        select * from ShoppingItems
+        where = ?
+        `,[cartId]
+    )
+    console.log(result);
+    return result;
+}
+
+// 유저의 point 변경
+const cost = async(userPoint, userId) => {
+    try{
+        const result = await database.appDataSource.query(
+            `
+            update users set point = ?
+            where id = ?;
+            
+            `,[userPoint, userId]
+        )
+        console.log(result);
+        return result;
+    }catch(err){
+        console.log(err);
+        const error = new Error();
+        error.message = "DB 에러"
+        throw error;
+    }
+}
+
+// 결제 정보를 담기 위한 cart 정보 불러오기
+const cartList = async(userId) => {
+    try{
+        const result = database.appDataSource.query(
+            `
+            select * from ShoppingItems
+            where userId = ?
+            order by id desc
+
+            `,[userId]
+        );
+        return result;
+
+    }catch(err){
+        console.log(err);
+        const error = new Error();
+        error.message = "DB 에러"
+        throw error;
+    }
+}
+
+// 결제 정보 담기
+const payment = async(cartId, totalPrice) => {
+    try{
+        const result = await database.appDataSource.query(
+            `
+            insert into Payments (shoppingItemsId, totalPrice)
+            values (?, ?)
+            
+            `,[cartId, totalPrice] 
+        );
+
+       return result;
+
+    }catch(err){
+        console.log(err);
+        const error = new Error();
+        error.message = "DB 에러"
+        throw error;
+    }
+}
+
+// 결제 상태 업데이트
+const updateStatus = async(payStatus, userId) => {
+    try{
+        const result = await database.appDataSource.query(
+            `
+            update ShoppingItems
+            set status = ?
+            where userId = ?
+            
+            `,[payStatus, userId] 
+        );
+
+       return result;
+
+    }catch(err){
+        console.log(err);
+        const error = new Error();
+        error.message = "DB 에러"
+        throw error;
+    }
+}
 // 유저 검증
 const foundUsers = async (id, email) => {
   try {
-    const sql = await database.appDataSoure.query(
+    const sql = await database.appDataSource.query(
       `
         SELECT id, email FROM users WHERE id = ? AND email = ?
       `, [id, email]
@@ -18,7 +129,7 @@ const foundUsers = async (id, email) => {
 // 해당 User의 장바구니 정보 호출
 const getUserCart = async (userid) => {
   try {
-    const sql = await database.appDataSoure.query(`
+    const sql = await database.appDataSource.query(`
       SELECT 
         Products.id, 
         Products.productImg, 
@@ -42,7 +153,7 @@ const getUserCart = async (userid) => {
 };
 const updateItemCount = async (productId, userId, count) => {
   try {
-    const sql = await database.appDataSoure.query(
+    const sql = await database.appDataSource.query(
       `
         UPDATE ShoppingItems 
           SET count = ?, totalPrice = totalPrice + price
@@ -190,7 +301,7 @@ const plusItemCount = async (count, userId, productId) => {
 // 상품 상세보기 (매장 정보 및 상품 정보)
 const getProductInfo = async (productId) => {
   try {
-    const storesQuery = await myDataSource.query(
+    const storesQuery = await database.appDataSource.query(
       `
       SELECT Stores.storeName, Stores.storeAddress 
         FROM Stores 
@@ -200,7 +311,7 @@ const getProductInfo = async (productId) => {
         `,
       [productId]
     );
-    const productQuery = await myDataSource.query(
+    const productQuery = await database.appDataSource.query(
       `
       SELECT * FROM 
         Products
@@ -218,7 +329,7 @@ const getProductInfo = async (productId) => {
 // 장바구니에 추가 
 const insertProducts = async (userId, productInfo) => {
   try {
-    const result = await myDataSource.query(
+    const result = await database.appDataSource.query(
       `
       INSERT INTO ShoppingItems (userId, productId, price, count, totalPrice)
       VALUES (?, ?, ?, ?, ?);
@@ -240,7 +351,7 @@ const insertProducts = async (userId, productInfo) => {
 // 전체 상품 가격 
 const getTotalPrice = async (userId) => {
   try {
-    const sql = await myDataSource.query(
+    const sql = await database.appDataSource.query(
       `
       SELECT SUM(totalPrice) FROM ShoppingItems WHERE userid = ?
       `
@@ -250,6 +361,39 @@ const getTotalPrice = async (userId) => {
     throw error;
   }
 };
+const realUser = async (id, email) => {
+  try {
+      const userCheck = await database.appDataSource.query(
+          "SELECT id, email FROM users WHERE id = ? AND email = ?",
+          [id, email]
+      );
+      return userCheck;
+  } catch (err) {
+      throw err;
+  }
+};
+const selectProduct = async () => {
+  try {
+      const productMain = await database.appDataSource.query(`
+          SELECT
+          Products.id,
+          Products.price,
+          Products.name,
+          Products.content,
+          Products.origin,
+          Products.productImg,
+          Products.categoryId,
+          Categories.categoryName
+          FROM Products
+          INNER JOIN Categories
+          ON Categories.id = Products.categoryId
+          ORDER BY Products.categoryId ASC
+      `);
+      return productMain;
+  } catch (err) {
+      throw err;
+  }
+}
 
 module.exports = {
   foundUsers,
@@ -264,5 +408,16 @@ module.exports = {
   plusItemCount,
   getProductInfo,
   insertProducts,
-  getTotalPrice
+  getTotalPrice,
+  getProducts, 
+  getUsers, 
+  createShoppingItem,
+  cost, 
+  selectCart, 
+  selectUserInfo, 
+  payment, 
+  cartList, 
+  updateStatus,
+  realUser,
+  selectProduct
 }
