@@ -11,10 +11,11 @@ const getProducts = async(productId,userInfo)=>{
     const dbUserId = checkUser[0].id;
     const dbUserEmail = checkUser[0].email;
 
+    const products = await productDao.getProducts(productId);
+
     if(userId !== dbUserId || userEmail !== dbUserEmail) {
         return "해당 유저가 없습니다.";
     }
-    const products = await productDao.getProducts(productId);
     return products;
 };
 
