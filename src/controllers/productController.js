@@ -7,7 +7,7 @@ const selectProduct = async (req, res) => {
     try {
         const customerInformation = req.user
         const mainList = await productService.selectProduct(customerInformation);
-        return res.status(200).json({ mainList });
+        return res.status(200).json( mainList );
     } catch (err) {
         console.error(err);
         return res.status(500).json({ message: "Internal server error" });
