@@ -14,6 +14,7 @@ const selectUserDataByEmail = async(email) => {
       `, [email]
     )
       return result;
+  }
 }
 
 // 회원가입
