@@ -30,6 +30,8 @@
 
 ### End Point API Document(각 파트별)
 이해민 : https://documenter.getpostman.com/view/30301632/2s9YXe8QPQ
+
 이재현 : https://documenter.getpostman.com/view/30169578/2s9YXe95Gs
+
 김문영 : https://documenter.getpostman.com/view/30418483/2s9YXfa2za
 
