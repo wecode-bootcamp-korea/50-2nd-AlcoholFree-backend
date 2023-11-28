@@ -43,24 +43,25 @@ const detailPage = async(req,res) =>{
     const userId = req.user;
     const { id } = req.params;
     const products = await productService.getProducts(id, userId)
-
     return res.status(200).json({products});
 };
 
 const createShoppingItem = async(req, res)=>{
-
-    const user = req.user.id;
-    const {productId, price, status, count, totalPrice} = req.body;
-
-        await productService.createShoppingItem(user, productId, price, status, count, totalPrice);
-        res.status(201).json({message: "succeeded"});
+    try {
+        const userInfo = req.user;
+        const {productId, count} = req.body;
+        console.log("set");
+        const product = await productService.inserBaskets(userInfo, productId, count );
+        return res.status(202).json({message: "SUCCESS INSERT PRODUCT"});
+    } catch(error) {
+        return res.status(400).json({ message: "SHOPPINGITEMS ERROR", error});
+    }
 };
 // 장바구니에 데이터 넣기
 const setShoppingItems = async(req, res) => {
     try {
         const userInfo = req.user;
         const {productId, count} = req.body;
-        console.log("set");
         const product = await productService.inserBaskets(userInfo, productId, count );
         return res.status(202).json({message: "SUCCESS INSERT PRODUCT"});
     } catch(error) {
@@ -122,12 +123,17 @@ const selectProduct = async (req, res) => {
     try {
         const customerInformation = req.user
         const mainList = await productService.selectProduct(customerInformation);
-        return res.status(200).json( { mainList } );
+        return res.status(200).json( mainList );
     } catch (err) {
         console.error(err);
         return res.status(500).json({ message: "Internal server error" });
     }
 }
+
+const likeProducts = async (req, res) => { 
+    
+};
+
 module.exports = {
     shoppingItems,
     itemUpdate,
@@ -138,5 +144,6 @@ module.exports = {
     detailProduct,
     cost, 
     selectUserInfo,
-    selectProduct
+    selectProduct,
+    likeProducts
 };
